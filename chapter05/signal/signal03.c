@@ -10,5 +10,25 @@ void sig_chld(int signo){
 	return;	
 }
 
+int main(){
+	pid_t pid;
+	if( signal(SIGCHLD,sig_chld)==SIG_ERR )
+                printf("\n can't catch SIGCHLD\n");
+	
+	if((pid=fork())==0){
+		sleep(5);
+	}else{
+		if((pid=fork())==0){
+                	sleep(5);	
+		}else{
+			while(1)
+				sleep(1);
+		}
+	}
+	
+	return 0;
+
+}
+
 
 
