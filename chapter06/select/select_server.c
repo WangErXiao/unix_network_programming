@@ -43,6 +43,9 @@ int main(){
 	FD_ZERO(&active_fd_set);
 	FD_SET(sock,&active_fd_set);
 
+	printf("socke fd descriptor is %d\n",sock);
+	printf("fd range max is  %d\n",FD_SETSIZE);
+
 	while(1){
 		read_fd_set=active_fd_set;
 		if (select (FD_SETSIZE, &read_fd_set, NULL, NULL, NULL) < 0){
@@ -55,7 +58,8 @@ int main(){
 			/* Connection request on original socket. */
 			int new;
 			size = sizeof(clientname);
-			new = accept(sock,(struct sockaddr *) &clientname,&size);
+			new = accept(sock,(struct sockaddr *)NULL,NULL);
+			/*
 			if (new < 0)
 			  {
 			    perror ("accept");
@@ -65,6 +69,7 @@ int main(){
 				 "Server: connect from host %s, port %hd.\n",
 				 inet_ntoa (clientname.sin_addr),
 				 ntohs (clientname.sin_port));
+			*/
 			FD_SET (new, &active_fd_set);
 		      }
 		    else
